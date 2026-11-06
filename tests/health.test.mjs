@@ -187,3 +187,11 @@ test('joins a night recorded in pieces into one sleep and keeps afternoon naps s
   assert.deepEqual(r.activities.map(a => a.name), ['Sleep · 3 parts', 'Nap']);
   assert.equal(r.metrics.sleepMinutes, 143);
 });
+
+test('server and Vercel send the same security headers', async () => {
+  const { SECURITY_HEADERS } = await import('../server.mjs');
+  const { readFile } = await import('node:fs/promises');
+  const vercel = JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8'));
+  const sent = Object.fromEntries(vercel.headers[0].headers.map(h => [h.key, h.value]));
+  assert.deepEqual(sent, SECURITY_HEADERS);
+});
