@@ -1,0 +1,20 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+.sites-runtime/
+.claude/settings.local.json
+.vercel
+.env*
+
+# Local research material: never commit
+evidence/*
+!evidence/web-desktop.jpg
+!evidence/web-mobile.jpg
+# Local notes and history backup
+local-only/
+docs/
+scoop-latest-audit.md
+scoop-roadmap.md
+marketing/
