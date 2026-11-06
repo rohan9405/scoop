@@ -1,0 +1,79 @@
+{
+  "screenshots": [
+    {
+      "file": "public/media/screenshots/recovery.png",
+      "mode": "example data",
+      "bytes": 194132
+    },
+    {
+      "file": "public/media/screenshots/desktop.png",
+      "mode": "example data",
+      "bytes": 190868
+    },
+    {
+      "file": "public/media/screenshots/sleep.png",
+      "mode": "example data",
+      "bytes": 204101
+    },
+    {
+      "file": "public/media/screenshots/overview.png",
+      "mode": "example data",
+      "bytes": 226641
+    },
+    {
+      "file": "public/media/screenshots/healthspan.png",
+      "mode": "example data",
+      "bytes": 353150
+    },
+    {
+      "file": "public/media/screenshots/stress.png",
+      "mode": "example data",
+      "bytes": 145753
+    },
+    {
+      "file": "public/media/screenshots/strain.png",
+      "mode": "example data",
+      "bytes": 170866
+    },
+    {
+      "file": "public/media/screenshots/coach.png",
+      "mode": "example data",
+      "bytes": 126459
+    },
+    {
+      "file": "public/media/screenshots/trends.png",
+      "mode": "example data",
+      "bytes": 133004
+    }
+  ],
+  "videos": [
+    {
+      "file": "public/media/videos/scoop-vertical-phone.mp4",
+      "width": 1080,
+      "height": 1920,
+      "seconds": 20,
+      "audio": "AAC stereo, instrumental music",
+      "sample_data_disclosure": true,
+      "bytes": 6596486,
+      "sha256": "8356c3c4cbf340e4d8192647df087d8859b990b4117e6e6b3528d139bd4cf908",
+      "verified_mean_volume_db": -16.1,
+      "verified_max_volume_db": -2.6
+    },
+    {
+      "file": "public/media/videos/scoop-vertical-cards.mp4",
+      "width": 1080,
+      "height": 1920,
+      "seconds": 20,
+      "audio": "AAC stereo, instrumental music",
+      "sample_data_disclosure": true,
+      "bytes": 6247186,
+      "sha256": "9640c08b995319dd6590fa0b208169569884d5ec9c561244b4b5600c3ead6c84",
+      "verified_mean_volume_db": -16.1,
+      "verified_max_volume_db": -2.6
+    }
+  ],
+  "social": [
+    "public/media/banner.png",
+    "public/media/social-preview.png"
+  ]
+}

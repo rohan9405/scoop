@@ -4,7 +4,7 @@
 node_modules
 evidence
 tests
-.claude
+.*/
 .git
 local-only
 docs
@@ -12,3 +12,8 @@ marketing
 output
 scoop-latest-audit.md
 scoop-roadmap.md
+
+portfolio-visual
+.portfolio-work
+android-app
+scripts

@@ -1,4 +1,4 @@
-import sharp from '/Users/shefaliagrawal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp/dist/index.mjs';
+import sharp from 'sharp';
 import {writeFile,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 const out=new URL('.',import.meta.url).pathname;

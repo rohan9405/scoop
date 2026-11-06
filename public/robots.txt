@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://scoop-mauve-two.vercel.app/sitemap.xml

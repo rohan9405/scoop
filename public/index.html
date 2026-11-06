@@ -3,11 +3,30 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1118"><meta name="description" content="Scoop, your personal dashboard for your Fitbit data. Sleep, activity, and health metrics in one place.">
-<title>Scoop · Your daily performance</title>
+<title>Scoop — Fitbit Sleep, Recovery &amp; Strain Dashboard</title>
+<meta name="application-name" content="Scoop">
+<meta name="author" content="Rohan Tripathi">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://scoop-mauve-two.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Scoop">
+<meta property="og:title" content="Scoop — Your Fitbit data, a clearer daily picture">
+<meta property="og:description" content="Understand your sleep, recovery, strain and stress. Explore trends and plan your day with a personal Fitbit dashboard powered by Google Health.">
+<meta property="og:url" content="https://scoop-mauve-two.vercel.app/">
+<meta property="og:image" content="https://scoop-mauve-two.vercel.app/media/social-preview.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Scoop personal Fitbit dashboard showing Sleep, Recovery and Strain with sample data">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scoop — Your Fitbit data, a clearer daily picture">
+<meta name="twitter:description" content="Sleep, recovery, strain, stress and daily coaching from your Fitbit data.">
+<meta name="twitter:image" content="https://scoop-mauve-two.vercel.app/media/social-preview.png">
+<meta name="twitter:image:alt" content="Scoop dashboard with sample Sleep, Recovery and Strain scores">
+
 <link rel="icon" type="image/svg+xml" href="/assets/scoop-mark.svg"><link rel="apple-touch-icon" href="/assets/scoop-mark.svg">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<noscript><p>Scoop turns your Fitbit data into sleep, recovery, strain and stress insights. <a href="/about.html">Explore the product tour</a>. Enable JavaScript to use the dashboard.</p></noscript>
 <div class="app-shell">
 <aside class="sidebar">
 <a href="#overview" class="wordmark" aria-label="Scoop home"><img class="wordmark-full" src="/assets/scoop-logo.svg" alt="SCOOP"><img class="wordmark-mark" src="/assets/scoop-infinity.svg" alt=""></a>
@@ -22,7 +41,7 @@
 <div class="date-pill" role="group" aria-label="Choose day"><button data-action="previous-day" aria-label="Previous day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button id="date-pill-label" class="date-pill-label" data-action="calendar">TODAY</button><button id="date-pill-next" data-action="next-day" aria-label="Next day"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>
 <div class="topbar-right"><span id="data-badge" class="data-badge" hidden></span><button class="device-chip" id="device-chip" data-action="device" aria-label="Device details"><span class="chip-text"><span class="chip-pct">—</span><span class="chip-sync"></span></span><svg class="device-icon" viewBox="0 0 24 32" aria-hidden="true"><path class="strap" d="M8 1h8M8 31h8"/><rect class="body" x="4" y="5" width="16" height="22" rx="6"/><rect class="fill" x="7" y="8" width="10" height="16" rx="3.5"/><circle class="pulse" cx="20" cy="5" r="3.2"/></svg></button></div></header>
 <main id="main" tabindex="-1"></main>
-<footer class="footer"><span>BUILT AROUND YOUR BODY.</span><span>Your personal Fitbit dashboard · <button data-action="about">About the data</button></span></footer>
+<footer class="footer"><span>BUILT AROUND YOUR BODY.</span><span><a href="/about.html">Product tour</a> · Your personal Fitbit dashboard · <button data-action="about">About the data</button></span></footer>
 </div>
 <div class="scrim" data-action="close-drawer" aria-hidden="true"></div>
 <button class="fab" data-action="fab" aria-label="Quick actions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>

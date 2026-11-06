@@ -10,3 +10,5 @@ Four matching compositions: compact S mark, full SCOOP wordmark, horizontal lock
 - New geometric lettering and S symbol inspired by the requested minimal performance-brand style. Existing app files and deployment were not modified.
 
 Created deterministically as vector paths and rasterized with Sharp, extending the app's existing SVG logo system.
+
+To regenerate PNGs, install the `sharp` package in your working environment and run `node generate.mjs` from this directory. The generator uses a portable package import.

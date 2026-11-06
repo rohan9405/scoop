@@ -1,8 +1,51 @@
-# Scoop
+<p align="center"><img src="public/media/banner.png" alt="Scoop — Your Fitbit data, a clearer daily picture" width="960"></p>
 
-Scoop is a personal health dashboard for Fitbit data. Anyone with a Fitbit linked to a Google account can connect, see their sleep, recovery, strain, stress and long-term habits, and get a plan for today and tonight.
+# Scoop — your personal Fitbit dashboard
 
-Live at **https://scoop-mauve-two.vercel.app**.
+Sleep, recovery, strain and stress, together with daily coaching and longer-term trends. Built for people who already wear a Fitbit and want more context from the measurements they collect.
+
+**[Open Scoop](https://scoop-mauve-two.vercel.app/) · [Product tour & videos](https://scoop-mauve-two.vercel.app/about.html) · [Run locally](#run-locally) · [Connect Fitbit](#connect-fitbit-through-google-health)**
+
+![Platform: Web](https://img.shields.io/badge/platform-Web-a5f7dc?labelColor=111b24)
+![Data: Google Health API](https://img.shields.io/badge/data-Google_Health_API-a5f7dc?labelColor=111b24)
+![Connection: read only](https://img.shields.io/badge/connection-read_only-a5f7dc?labelColor=111b24)
+
+![Scoop desktop overview with sample Sleep, Recovery, Strain, vitals and activities](public/media/screenshots/desktop.png)
+
+<sub>Screenshots show the actual app in labelled example mode. Product films use illustrative sample data. No personal health records or credentials are pictured. Scoop’s scores are its own estimates, not official Fitbit or WHOOP scores or medical measurements.</sub>
+
+## A daily picture from the data you already collect
+
+| Feature | What you can do |
+|---|---|
+| Recovery | Compare HRV and resting heart rate with your own baseline; inspect how the estimate is built. |
+| Sleep | Explore stages, efficiency and sleep need; plan tonight’s bedtime. |
+| Strain | See daily effort from heart-rate zones, steps and active calories. |
+| Stress | Explore a heart-rate-based estimate alongside sleep and workouts. |
+| Trends | Compare 7 or 30 days of activity, sleep and recovery. |
+| Coach | Choose a sleep goal and a recovery-based strain target. |
+| Workout detail | Inspect heart rate, duration, calories and time in your zones. |
+| Scoop Age | Explore a non-medical estimate from six habits and your date of birth. |
+
+### Inside the app
+
+<table><tr><td><img src="public/media/screenshots/recovery.png" alt="Recovery score and personal baseline in example mode" width="250"><br><b>Recovery</b> — understand your baseline</td><td><img src="public/media/screenshots/sleep.png" alt="Sleep score and metrics in example mode" width="250"><br><b>Sleep</b> — plan a better night</td><td><img src="public/media/screenshots/stress.png" alt="Stress chart with example heart-rate data" width="250"><br><b>Stress</b> — see the shape of your day</td></tr><tr><td><img src="public/media/screenshots/trends.png" alt="Seven-day sample recovery and strain trends" width="250"><br><b>Trends</b> — look beyond one day</td><td><img src="public/media/screenshots/coach.png" alt="Sleep and strain coaching controls" width="250"><br><b>Coach</b> — a plan for today and tonight</td><td><img src="public/media/screenshots/overview.png" alt="Today overview with clearly labelled sample scores" width="250"><br><b>Today</b> — one connected picture</td></tr></table>
+
+### Product films — portrait, with sound
+
+Two 20-second, 1080 × 1920 films with an original instrumental soundtrack. Click a poster to watch on the product page; playback starts only when you choose it.
+
+[<img src="public/media/videos/phone-poster.jpg" width="220" alt="Watch the Scoop portrait product walkthrough">](https://scoop-mauve-two.vercel.app/about.html#films)
+[<img src="public/media/videos/cards-poster.jpg" width="220" alt="Watch Scoop portrait feature highlights">](https://scoop-mauve-two.vercel.app/about.html#films)
+
+Local MP4s: [Product walkthrough](public/media/videos/scoop-vertical-phone.mp4) · [Feature highlights](public/media/videos/scoop-vertical-cards.mp4). Both use illustrative sample data; neither contains spoken narration.
+
+### Before connecting
+
+- Your Fitbit must sync with its official app first; Scoop reads the resulting Google Health cloud data.
+- Google OAuth test-user and verification settings control who can connect. The example dashboard is available without an account.
+- Available measurements depend on your device and the read-only permissions you grant.
+- Scoop is independent and is not affiliated with Google, Fitbit or WHOOP. It is not a medical tool.
 
 ## Features
 
@@ -121,7 +164,7 @@ npm run dev
 
 Tests cover Google Health normalisation (roll-ups, daily summaries, split nights, naps, time zones), score formulas, the stress estimate, the Others mapping, date validation, request shapes and pagination, partial permission failures, encrypted cookie sessions, and the HTTP routes' security checks.
 
-Source map: `public/` frontend (`app.js`, `styles.css`, `index.html`, `assets/`), `server.mjs` HTTP and OAuth server, `health.mjs` Google Health adapter and score logic, `api/index.mjs` Vercel entry, `tests/` tests, `docs/` design notes, `evidence/` research notes.
+Source map: `public/` dashboard, product page and media; `server.mjs` HTTP and OAuth server; `health.mjs` Google Health adapter and score logic; `api/index.mjs` Vercel entry; `tests/` automated checks; `marketing/press-kit/` launch copy and media inventory.
 
 ## Credits
 

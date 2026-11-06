@@ -4,7 +4,7 @@ node_modules/
 !.env.example
 .DS_Store
 .sites-runtime/
-.claude/settings.local.json
+.*/
 .vercel
 .env*
 
@@ -17,4 +17,12 @@ local-only/
 docs/
 scoop-latest-audit.md
 scoop-roadmap.md
-marketing/
+marketing/*
+!marketing/README.md
+!marketing/press-kit/
+!marketing/press-kit/**
+
+# Separate portfolio previews and local build products
+portfolio-visual/
+.portfolio-work/
+android-app/
