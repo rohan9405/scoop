@@ -6,3 +6,9 @@ evidence
 tests
 .claude
 .git
+local-only
+docs
+marketing
+output
+scoop-latest-audit.md
+scoop-roadmap.md

@@ -25,6 +25,33 @@ export const SECURITY_HEADERS = {
   'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://lh3.googleusercontent.com; font-src 'self'; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
 };
 const randomId = () => randomBytes(32).toString('base64url');
+// Endpoints that make Scoop call Google on the signed-in person's behalf.
+const GOOGLE_PATHS = new Set(['/api/health', '/api/diagnostics', '/api/stress', '/api/activity', '/api/permissions', '/api/profile', '/api/others']);
+const AUTH_PATHS = new Set(['/api/connect', '/api/oauth/callback']);
+export const DEFAULT_LIMITS = {
+  ip: { limit: 120, windowMs: 60e3 },             // any /api request, per client IP
+  auth: { limit: 10, windowMs: 60e3 },            // starting or finishing sign-in, per client IP
+  accountMinute: { limit: 30, windowMs: 60e3 },   // Google-backed requests, per connected account
+  accountHour: { limit: 300, windowMs: 3600e3 },
+};
+
+/** Fixed-window counter. Each server instance keeps its own counts, so this backs up the
+ * Vercel firewall rule; its main job is capping how often one account can make Scoop call Google. */
+export function createLimiter({ limit, windowMs, maxKeys = 10000 }) {
+  const hits = new Map();
+  return key => {
+    const now = Date.now();
+    let entry = hits.get(key);
+    if (!entry || entry.reset <= now) {
+      if (hits.size >= maxKeys) for (const [k, v] of hits) if (v.reset <= now) hits.delete(k);
+      if (hits.size >= maxKeys) hits.delete(hits.keys().next().value);
+      entry = { count: 0, reset: now + windowMs };
+      hits.set(key, entry);
+    }
+    entry.count += 1;
+    return entry.count > limit ? Math.max(1, Math.ceil((entry.reset - now) / 1000)) : 0;
+  };
+}
 const equal = (a, b) => {
   if (typeof a !== 'string' || typeof b !== 'string') return false;
   const first = Buffer.from(a), second = Buffer.from(b);
@@ -90,6 +117,15 @@ export function createHandler(options = {}) {
   };
   const json = (response, status, data) => { response.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' }); response.end(JSON.stringify(data)); };
   const redirect = (response, location) => { response.writeHead(302, { Location: location }); response.end(); };
+  const limits = { ...DEFAULT_LIMITS, ...options.limits };
+  const limiter = Object.fromEntries(Object.entries(limits).map(([name, rule]) => [name, createLimiter(rule)]));
+  // Vercel sets x-forwarded-for itself; locally only the socket address can be trusted.
+  const clientIp = request => (hosted && request.headers['x-forwarded-for']?.split(',')[0].trim()) || request.socket.remoteAddress || 'unknown';
+  const accountKey = tokens => createHash('sha256').update(String(tokens.refresh_token || tokens.access_token)).digest('base64url').slice(0, 22);
+  const tooMany = (response, seconds) => {
+    response.setHeader('Retry-After', String(seconds));
+    return json(response, 429, { error: 'rate_limited', message: `Too many requests. Try again in ${seconds < 60 ? `${seconds} seconds` : `${Math.ceil(seconds / 60)} minutes`}.` });
+  };
 
   return async function handler(request, response) {
     for (const [name, value] of Object.entries(SECURITY_HEADERS)) response.setHeader(name, value);
@@ -97,6 +133,12 @@ export function createHandler(options = {}) {
       const url = new URL(request.url, origin);
       const session = configured ? sealer.open(readCookie(request, SESSION_COOKIE) || '') : null;
       const connected = Boolean(session?.tokens?.refresh_token || session?.tokens?.access_token);
+      if (url.pathname.startsWith('/api/')) {
+        const ip = clientIp(request);
+        const wait = limiter.ip(ip) || (AUTH_PATHS.has(url.pathname) && limiter.auth(ip))
+          || (connected && GOOGLE_PATHS.has(url.pathname) && (() => { const key = accountKey(session.tokens); return limiter.accountMinute(key) || limiter.accountHour(key); })());
+        if (wait) return tooMany(response, wait);
+      }
       if (url.pathname === '/api/status' && request.method === 'GET') {
         return json(response, 200, { configured, connected, provider: 'Google Health', profile: connected ? session.profile || null : null,
           reason: configured ? null : hosted && !hasSecret ? 'SESSION_SECRET (32+ characters) must be set on the server before your Fitbit account can be connected.' : 'Google OAuth credentials are required before your Fitbit account can be connected.',

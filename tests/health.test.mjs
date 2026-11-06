@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizeHealth, normalizeOthers, fetchHealthDay, stressFromHeartRate, stressLevel, localDayRange, validDate, addDays, strainScore, sleepScore, recoveryScore } from '../health.mjs';
-import { createAppServer } from '../server.mjs';
+import { createAppServer, createLimiter } from '../server.mjs';
 
 // Fixture field names and units follow Google's v4 Discovery schema.
 const date = '2026-11-06';
@@ -194,4 +194,29 @@ test('server and Vercel send the same security headers', async () => {
   const vercel = JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8'));
   const sent = Object.fromEntries(vercel.headers[0].headers.map(h => [h.key, h.value]));
   assert.deepEqual(sent, SECURITY_HEADERS);
+});
+
+test('rate limits API requests per IP and sign-in attempts, and reports Retry-After', async t => {
+  const env = { PORT: '3000', GOOGLE_CLIENT_ID: 'test-id', GOOGLE_CLIENT_SECRET: 'test-secret', SESSION_SECRET: 'x'.repeat(40) };
+  const server = createAppServer({ env, limits: { ip: { limit: 5, windowMs: 60e3 }, auth: { limit: 2, windowMs: 60e3 } } });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const base = `http://127.0.0.1:${server.address().port}`;
+  assert.equal((await fetch(`${base}/api/connect`, { redirect: 'manual' })).status, 302);
+  assert.equal((await fetch(`${base}/api/connect`, { redirect: 'manual' })).status, 302);
+  const blocked = await fetch(`${base}/api/connect`, { redirect: 'manual' });
+  assert.equal(blocked.status, 429);
+  assert.ok(Number(blocked.headers.get('retry-after')) > 0);
+  assert.equal((await blocked.json()).error, 'rate_limited');
+  assert.equal((await fetch(`${base}/api/status`)).status, 200);
+  assert.equal((await fetch(`${base}/api/status`)).status, 200);
+  assert.equal((await fetch(`${base}/api/status`)).status, 429);
+  assert.equal((await fetch(`${base}/`)).status, 200, 'static pages are not limited');
+});
+test('limiter windows reset and old keys are evicted', () => {
+  const check = createLimiter({ limit: 1, windowMs: 1000, maxKeys: 2 });
+  assert.equal(check('a'), 0);
+  assert.ok(check('a') > 0);
+  check('b'); check('c');
+  assert.equal(check('a'), 0, 'evicted key starts a fresh window');
 });
