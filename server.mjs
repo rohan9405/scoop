@@ -31,7 +31,9 @@ const AUTH_PATHS = new Set(['/api/connect', '/api/oauth/callback']);
 export const DEFAULT_LIMITS = {
   ip: { limit: 120, windowMs: 60e3 },             // any /api request, per client IP
   auth: { limit: 10, windowMs: 60e3 },            // starting or finishing sign-in, per client IP
-  accountMinute: { limit: 30, windowMs: 60e3 },   // Google-backed requests, per connected account
+  // Google-backed requests per connected account. /api/health makes ~13 Google calls, so 20 a minute
+  // stays under Google Health's fixed 300-requests-per-minute-per-user quota.
+  accountMinute: { limit: 20, windowMs: 60e3 },
   accountHour: { limit: 300, windowMs: 3600e3 },
 };
 
