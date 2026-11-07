@@ -32,4 +32,4 @@ fitbit, google-health, health-dashboard, sleep-tracking, recovery, strain, stres
 Use `public/media/screenshots/overview.png` as a first look; use Recovery, Sleep and Stress as supporting images. Use `public/media/videos/scoop-vertical-phone.mp4` or `scoop-vertical-cards.mp4` for portrait placements with audio. All show sample data. Keep the on-video disclosure visible.
 
 ## Claim boundaries
-Do not promise direct tracker sync, clinical accuracy, official Fitbit/WHOOP scores, universal OAuth access, or a native offline Android client. The server does not persist health records, but the browser caches days and stores local settings/check-ins; avoid “stores nothing”. No posts have been published by this task.
+Do not promise direct tracker sync, clinical accuracy, official Fitbit/WHOOP scores, universal OAuth access. The server does not persist health records, but the browser caches days and stores local settings/check-ins; avoid “stores nothing”. No posts have been published by this task.

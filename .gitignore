@@ -25,4 +25,3 @@ marketing/*
 # Separate portfolio previews and local build products
 portfolio-visual/
 .portfolio-work/
-android-app/
